@@ -49,8 +49,6 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun HomeScreen() {
     MyAppTheme {
-
-
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             Scaffold(modifier = Modifier, topBar = {
                 TopAppBar(
