@@ -1,6 +1,5 @@
 package com.alhussain.cap10.screens
 
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -56,7 +55,7 @@ fun HomeScreen() {
                         Text(
                             getCurrentLocalization().appName,
                             color = Color.White,
-                            style = MaterialTheme.typography.titleLarge
+                            style = MaterialTheme.typography.titleLarge,
                         )
                     },
                     navigationIcon = {
@@ -64,22 +63,21 @@ fun HomeScreen() {
                             Icons.Default.Menu,
                             contentDescription = null,
                             tint = Color.White,
-                            modifier = Modifier.padding(horizontal = 16.dp)
+                            modifier = Modifier.padding(horizontal = 16.dp),
                         )
                     },
                     actions = {
                         Icon(
-
                             Icons.Default.Phone,
                             contentDescription = null,
                             tint = Color.White,
-                            modifier = Modifier.padding(horizontal = 16.dp)
+                            modifier = Modifier.padding(horizontal = 16.dp),
                         )
                         Icon(
                             Icons.Default.Notifications,
                             contentDescription = null,
                             tint = Color.White,
-                            modifier = Modifier.padding(horizontal = 16.dp)
+                            modifier = Modifier.padding(horizontal = 16.dp),
                         )
                     },
                 )
@@ -90,7 +88,7 @@ fun HomeScreen() {
                             Icon(
                                 painterResource(Res.drawable.ic_stadiums),
                                 contentDescription = null,
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(24.dp),
                             )
                         },
                         onClick = {},
@@ -105,13 +103,12 @@ fun HomeScreen() {
                         Icon(
                             painterResource(Res.drawable.ic_teams),
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(24.dp),
                         )
                     }, onClick = {
-
                     }, selected = false, label = {
                         Text(
-                            getCurrentLocalization().myTeams
+                            getCurrentLocalization().myTeams,
                         )
                     })
                     NavigationBarItem(
@@ -119,38 +116,35 @@ fun HomeScreen() {
                             Icon(
                                 painterResource(Res.drawable.ic_stadiums),
                                 contentDescription = null,
-                                modifier = Modifier.size(24.dp)
-
+                                modifier = Modifier.size(24.dp),
                             )
                         },
                         onClick = {
-
                         },
                         selected = false,
                         label = {
                             Text(
                                 getCurrentLocalization().stadiums,
-
-                                )
+                            )
                         },
-
-                        )
+                    )
                 }
             }) { paddingValues ->
                 Column(
-                    modifier = Modifier.fillMaxSize().padding(paddingValues)
+                    modifier = Modifier.fillMaxSize().padding(paddingValues),
                 ) {
                     SliderWidget(emptyList())
                     Column(
-                        modifier = Modifier.fillMaxSize()
-                            .padding(vertical = 8.dp, horizontal = 32.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(vertical = 8.dp, horizontal = 32.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
-
-                        ) {
-                        val cardModifier: Modifier = remember {
-                            Modifier.weight(1f).aspectRatio(1.1f)
-                        }
-
+                    ) {
+                        val cardModifier: Modifier =
+                            remember {
+                                Modifier.weight(1f).aspectRatio(1.1f)
+                            }
 
                         Spacer(modifier = Modifier.height(16.dp))
 
@@ -158,13 +152,13 @@ fun HomeScreen() {
                             FeatureCard(
                                 modifier = cardModifier,
                                 getCurrentLocalization().bookStadium,
-                                Res.drawable.icon_booking_stadium
+                                Res.drawable.icon_booking_stadium,
                             )
                             Spacer(modifier = Modifier.width(16.dp))
                             FeatureCard(
                                 modifier = cardModifier,
                                 getCurrentLocalization().leagues,
-                                Res.drawable.ic_tournaments
+                                Res.drawable.ic_tournaments,
                             )
                         }
                         Spacer(modifier = Modifier.height(16.dp))
@@ -172,20 +166,18 @@ fun HomeScreen() {
                             FeatureCard(
                                 modifier = cardModifier,
                                 getCurrentLocalization().officials,
-                                Res.drawable.ic_matches
+                                Res.drawable.ic_matches,
                             )
                             Spacer(modifier = Modifier.width(16.dp))
                             FeatureCard(
                                 modifier = cardModifier,
                                 getCurrentLocalization().posts,
-                                Res.drawable.ic_stadium_icon
+                                Res.drawable.ic_stadium_icon,
                             )
                         }
                     }
                 }
-
             }
         }
-
     }
 }
