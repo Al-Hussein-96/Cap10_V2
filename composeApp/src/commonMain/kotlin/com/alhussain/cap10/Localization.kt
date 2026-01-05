@@ -1,8 +1,8 @@
 package com.alhussain.cap10
 
-
 enum class AvailableLanguages {
-    AR, EN;
+    AR,
+    EN,
 }
 
 expect fun getCurrentLanguage(): AvailableLanguages
@@ -18,7 +18,6 @@ interface Localization {
     val home: String
     val myTeams: String
     val stadiums: String
-
 }
 
 private object EnglishLocalization : Localization {
@@ -30,7 +29,6 @@ private object EnglishLocalization : Localization {
     override val home = "Home"
     override val myTeams = "My Teams"
     override val stadiums = "Stadiums"
-
 }
 
 private object ArabicLocalization : Localization {
@@ -44,7 +42,8 @@ private object ArabicLocalization : Localization {
     override val stadiums = "الملاعب"
 }
 
-fun getCurrentLocalization() = when (getCurrentLanguage()) {
-    AvailableLanguages.EN -> EnglishLocalization
-    AvailableLanguages.AR -> ArabicLocalization
-}
+fun getCurrentLocalization() =
+    when (getCurrentLanguage()) {
+        AvailableLanguages.EN -> EnglishLocalization
+        AvailableLanguages.AR -> ArabicLocalization
+    }

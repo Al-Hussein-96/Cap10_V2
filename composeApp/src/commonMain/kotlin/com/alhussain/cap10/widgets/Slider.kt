@@ -15,13 +15,11 @@ import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
 @Composable
-fun SliderWidget(images: List<String>) {
-
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = {
-        3
-    })
-
-
+fun SliderWidget() {
+    val pagerState =
+        rememberPagerState(initialPage = 0, pageCount = {
+            3
+        })
 
     HorizontalPager(state = pagerState) { page ->
         // Our page content
@@ -29,8 +27,7 @@ fun SliderWidget(images: List<String>) {
             painter = painterResource(Res.drawable.slider1),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
-
 }

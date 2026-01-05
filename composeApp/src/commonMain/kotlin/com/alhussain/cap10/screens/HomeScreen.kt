@@ -38,11 +38,13 @@ import cap10.composeapp.generated.resources.ic_teams
 import cap10.composeapp.generated.resources.ic_tournaments
 import cap10.composeapp.generated.resources.icon_booking_stadium
 import com.alhussain.cap10.getCurrentLocalization
-import com.alhussain.cap10.theme.Green
 import com.alhussain.cap10.theme.MyAppTheme
+import com.alhussain.cap10.theme.green
 import com.alhussain.cap10.widgets.FeatureCard
 import com.alhussain.cap10.widgets.SliderWidget
 import org.jetbrains.compose.resources.painterResource
+
+const val ASPECT_VALUE = 1.1f // ✅
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,134 +52,142 @@ fun HomeScreen() {
     MyAppTheme {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             Scaffold(modifier = Modifier, topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            getCurrentLocalization().appName,
-                            color = Color.White,
-                            style = MaterialTheme.typography.titleLarge,
-                        )
-                    },
-                    navigationIcon = {
-                        Icon(
-                            Icons.Default.Menu,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                        )
-                    },
-                    actions = {
-                        Icon(
-                            Icons.Default.Phone,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                        )
-                        Icon(
-                            Icons.Default.Notifications,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                        )
-                    },
-                )
+                TopBarWidget()
             }, bottomBar = {
-                NavigationBar(containerColor = Green) {
-                    NavigationBarItem(
-                        icon = {
-                            Icon(
-                                painterResource(Res.drawable.ic_stadiums),
-                                contentDescription = null,
-                                modifier = Modifier.size(24.dp),
-                            )
-                        },
-                        onClick = {},
-                        selected = true,
-                        label = {
-                            Text(
-                                getCurrentLocalization().home,
-                            )
-                        },
-                    )
-                    NavigationBarItem(icon = {
-                        Icon(
-                            painterResource(Res.drawable.ic_teams),
-                            contentDescription = null,
-                            modifier = Modifier.size(24.dp),
-                        )
-                    }, onClick = {
-                    }, selected = false, label = {
-                        Text(
-                            getCurrentLocalization().myTeams,
-                        )
-                    })
-                    NavigationBarItem(
-                        icon = {
-                            Icon(
-                                painterResource(Res.drawable.ic_stadiums),
-                                contentDescription = null,
-                                modifier = Modifier.size(24.dp),
-                            )
-                        },
-                        onClick = {
-                        },
-                        selected = false,
-                        label = {
-                            Text(
-                                getCurrentLocalization().stadiums,
-                            )
-                        },
-                    )
-                }
+                NavigationBarWidget()
             }) { paddingValues ->
                 Column(
                     modifier = Modifier.fillMaxSize().padding(paddingValues),
                 ) {
-                    SliderWidget(emptyList())
-                    Column(
-                        modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(vertical = 8.dp, horizontal = 32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        val cardModifier: Modifier =
-                            remember {
-                                Modifier.weight(1f).aspectRatio(1.1f)
-                            }
-
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Row {
-                            FeatureCard(
-                                modifier = cardModifier,
-                                getCurrentLocalization().bookStadium,
-                                Res.drawable.icon_booking_stadium,
-                            )
-                            Spacer(modifier = Modifier.width(16.dp))
-                            FeatureCard(
-                                modifier = cardModifier,
-                                getCurrentLocalization().leagues,
-                                Res.drawable.ic_tournaments,
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Row {
-                            FeatureCard(
-                                modifier = cardModifier,
-                                getCurrentLocalization().officials,
-                                Res.drawable.ic_matches,
-                            )
-                            Spacer(modifier = Modifier.width(16.dp))
-                            FeatureCard(
-                                modifier = cardModifier,
-                                getCurrentLocalization().posts,
-                                Res.drawable.ic_stadium_icon,
-                            )
-                        }
-                    }
+                    SliderWidget()
+                    HomePageContent()
                 }
             }
         }
     }
 }
+
+@Composable
+fun HomePageContent() =
+    Column(
+        modifier = Modifier.fillMaxSize().padding(vertical = 8.dp, horizontal = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        val cardModifier: Modifier =
+            remember {
+                Modifier.weight(1f).aspectRatio(ASPECT_VALUE)
+            }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row {
+            FeatureCard(
+                modifier = cardModifier,
+                getCurrentLocalization().bookStadium,
+                Res.drawable.icon_booking_stadium,
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            FeatureCard(
+                modifier = cardModifier,
+                getCurrentLocalization().leagues,
+                Res.drawable.ic_tournaments,
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Row {
+            FeatureCard(
+                modifier = cardModifier,
+                getCurrentLocalization().officials,
+                Res.drawable.ic_matches,
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            FeatureCard(
+                modifier = cardModifier,
+                getCurrentLocalization().posts,
+                Res.drawable.ic_stadium_icon,
+            )
+        }
+    }
+
+@Composable
+fun NavigationBarWidget() =
+    NavigationBar(containerColor = green) {
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    painterResource(Res.drawable.ic_stadiums),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                )
+            },
+            onClick = {},
+            selected = true,
+            label = {
+                Text(
+                    getCurrentLocalization().home,
+                )
+            },
+        )
+        NavigationBarItem(icon = {
+            Icon(
+                painterResource(Res.drawable.ic_teams),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp),
+            )
+        }, onClick = {}, selected = false, label = {
+            Text(
+                getCurrentLocalization().myTeams,
+            )
+        })
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    painterResource(Res.drawable.ic_stadiums),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                )
+            },
+            onClick = {},
+            selected = false,
+            label = {
+                Text(
+                    getCurrentLocalization().stadiums,
+                )
+            },
+        )
+    }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBarWidget() =
+    TopAppBar(
+        title = {
+            Text(
+                getCurrentLocalization().appName,
+                color = Color.White,
+                style = MaterialTheme.typography.titleLarge,
+            )
+        },
+        navigationIcon = {
+            Icon(
+                Icons.Default.Menu,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+        },
+        actions = {
+            Icon(
+                Icons.Default.Phone,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+            Icon(
+                Icons.Default.Notifications,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+        },
+    )

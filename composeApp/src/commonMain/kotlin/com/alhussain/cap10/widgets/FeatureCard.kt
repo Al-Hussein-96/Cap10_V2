@@ -17,28 +17,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.alhussain.cap10.theme.DarkBlue
-import com.alhussain.cap10.theme.Green
+import com.alhussain.cap10.theme.darkBlue
+import com.alhussain.cap10.theme.green
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
-
 @Composable
-fun FeatureCard(modifier: Modifier = Modifier, title: String, icon: DrawableResource) {
+fun FeatureCard(
+    modifier: Modifier = Modifier,
+    title: String,
+    icon: DrawableResource,
+) {
     Card(
         onClick = { /* Do something */ },
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = DarkBlue)
+        colors = CardDefaults.cardColors(containerColor = darkBlue),
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxSize().padding(8.dp)
+            modifier = Modifier.fillMaxSize().padding(8.dp),
         ) {
             Icon(
                 painterResource(icon),
-                tint = Green,
+                tint = green,
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth().height(70.dp),
             )

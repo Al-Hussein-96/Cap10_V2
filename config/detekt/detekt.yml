@@ -1,0 +1,14 @@
+naming:
+  FunctionNaming:
+    active: true
+    # Ignore composable functions
+    ignoreAnnotated:
+      - Composable
+
+
+  MatchingDeclarationName:
+    active: true
+    excludes:
+      - "**/androidMain/**"
+      - "**/iosMain/**"
+      - "**/jvmMain/**"
