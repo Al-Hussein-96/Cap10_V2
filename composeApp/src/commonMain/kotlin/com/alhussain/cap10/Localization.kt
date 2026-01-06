@@ -12,6 +12,7 @@ expect fun getCurrentPlatform(): String
 interface Localization {
     val appName: String
     val bookStadium: String
+    val players: String
     val leagues: String
     val officials: String
     val posts: String
@@ -23,6 +24,7 @@ interface Localization {
 private object EnglishLocalization : Localization {
     override val appName = "Cap10"
     override val bookStadium = "Book Stadium"
+    override val players = "Players"
     override val leagues = "Leagues"
     override val officials = "Officials"
     override val posts = "Posts"
@@ -34,6 +36,7 @@ private object EnglishLocalization : Localization {
 private object ArabicLocalization : Localization {
     override val appName = "Cap10"
     override val bookStadium = "حجز ملعب"
+    override val players = "اللاعبين"
     override val leagues = "البطولات"
     override val officials = "الرسميات"
     override val posts = "المنشورات"

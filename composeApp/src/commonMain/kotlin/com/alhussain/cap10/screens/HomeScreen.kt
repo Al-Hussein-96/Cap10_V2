@@ -1,15 +1,21 @@
 package com.alhussain.cap10.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Phone
@@ -33,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cap10.composeapp.generated.resources.Res
 import cap10.composeapp.generated.resources.ic_matches
+import cap10.composeapp.generated.resources.ic_stadium_icon
 import cap10.composeapp.generated.resources.ic_stadiums
 import cap10.composeapp.generated.resources.ic_teams
 import cap10.composeapp.generated.resources.icon_booking_stadium
@@ -51,7 +58,7 @@ fun HomeScreen() {
             Scaffold(
                 modifier = Modifier,
                 topBar = { TopBarWidget() },
-                bottomBar = { NavigationBarWidget() },
+                bottomBar = { /*NavigationBarWidget() */ },
                 containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
             ) { paddingValues ->
                 Column(
@@ -77,25 +84,45 @@ fun HomePageContent() =
                 .padding(vertical = 16.dp, horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val cardModifier: Modifier =
-            remember {
-                Modifier.weight(1f).aspectRatio(ASPECT_VALUE)
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            // First item spans 2 columns (full width)
+            item(span = { GridItemSpan(2) }) {
+                FeatureCard(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(),
+                    getCurrentLocalization().players,
+                    Res.drawable.ic_matches,
+                )
             }
 
-        Row {
-            FeatureCard(
-                modifier = cardModifier,
-                getCurrentLocalization().bookStadium,
-                Res.drawable.icon_booking_stadium,
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            FeatureCard(
-                modifier = cardModifier,
-                getCurrentLocalization().posts,
-                Res.drawable.ic_matches,
-            )
+            // Regular grid items
+            item {
+                FeatureCard(
+                    modifier = Modifier,
+                    getCurrentLocalization().bookStadium,
+                    Res.drawable.icon_booking_stadium,
+                )
+            }
+
+            item {
+                FeatureCard(
+                    modifier = Modifier,
+                    getCurrentLocalization().posts,
+                    Res.drawable.ic_stadium_icon,
+                )
+            }
+
+            // Add more items as needed
         }
-        Spacer(modifier = Modifier.height(16.dp))
     }
 
 @Composable
