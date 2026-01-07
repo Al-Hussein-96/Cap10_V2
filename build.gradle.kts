@@ -14,6 +14,7 @@ plugins {
     id("com.diffplug.spotless") version "8.1.0" apply false
 
     alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.kotlinJvm) apply false
 }
 
 subprojects {
