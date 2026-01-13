@@ -1,0 +1,18 @@
+ktor:
+  deployment:
+    port: 8080
+  application:
+    modules:
+      - com.footballapp.ApplicationKt.module
+
+database:
+  url: jdbc:postgresql://localhost:5432/football_db
+  driver: org.postgresql.Driver
+  user: your_username
+  password: your_password
+
+jwt:
+  secret: your-very-secure-secret-key-change-this-in-production-at-least-256-bits
+  issuer: http://localhost:8080
+  audience: http://localhost:8080/api
+  realm: Football App
