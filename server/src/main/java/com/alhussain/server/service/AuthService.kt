@@ -19,7 +19,6 @@ class AuthService(
     private val otpRepository: OtpRepository,
     private val jwtSecret: String,
     private val jwtIssuer: String,
-    private val jwtAudience: String,
 ) {
     private val otpExpiryMinutes: Long = 5
 
@@ -152,7 +151,6 @@ class AuthService(
 
         return JWT
             .create()
-            .withAudience(jwtAudience)
             .withIssuer(jwtIssuer)
             .withClaim("userId", userId)
             .withExpiresAt(expiresAt)

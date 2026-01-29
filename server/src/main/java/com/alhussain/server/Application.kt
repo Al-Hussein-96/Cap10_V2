@@ -33,10 +33,10 @@ fun main() {
 fun Application.module() {
     // Database configuration
     Database.connect(
-        url = environment.config.property("database.url").getString(),
-        driver = environment.config.property("database.driver").getString(),
-        user = environment.config.property("database.user").getString(),
-        password = environment.config.property("database.password").getString(),
+        url = "jdbc:postgresql://localhost:5432/football_db"/*environment.config.property("database.url").getString()*/,
+        driver = "org.postgresql.Driver"/*environment.config.property("database.driver").getString()*/,
+        user = "alhussain" /*environment.config.property("database.user").getString()*/,
+        password = "Pass@123"/*environment.config.property("database.password").getString()*/,
     )
 
     // Create tables if they don't exist
@@ -45,10 +45,8 @@ fun Application.module() {
     }
 
     // JWT Configuration
-    val jwtSecret = environment.config.property("jwt.secret").getString()
-    val jwtIssuer = environment.config.property("jwt.issuer").getString()
-    val jwtAudience = environment.config.property("jwt.audience").getString()
-    val jwtRealm = environment.config.property("jwt.realm").getString()
+    val jwtSecret = "alhussain"
+    val jwtIssuer = "ktor.io"
 
     // Install plugins
     install(ContentNegotiation) {
@@ -63,11 +61,9 @@ fun Application.module() {
 
     install(Authentication) {
         jwt("auth-jwt") {
-            realm = jwtRealm
             verifier(
                 JWT
                     .require(Algorithm.HMAC256(jwtSecret))
-                    .withAudience(jwtAudience)
                     .withIssuer(jwtIssuer)
                     .build(),
             )
@@ -105,7 +101,6 @@ fun Application.module() {
             otpRepository = otpRepository,
             jwtSecret = jwtSecret,
             jwtIssuer = jwtIssuer,
-            jwtAudience = jwtAudience,
         )
 
     // Setup routing
