@@ -9,14 +9,15 @@ import com.alhussain.shared.dto.response.CompleteProfileResponse
 import com.alhussain.shared.dto.response.LogoutResponse
 import com.alhussain.shared.dto.response.SendOtpResponse
 import com.alhussain.shared.dto.response.VerifyOtpResponse
-import io.ktor.http.*
-import io.ktor.server.application.*
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.authenticate
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.post
+import io.ktor.server.routing.route
 
 fun Route.authRoutes(authService: AuthService) {
     route("/api/auth") {
@@ -137,7 +138,7 @@ fun Route.authRoutes(authService: AuthService) {
 
                     val request = call.receive<CompleteProfileRequest>()
 
-                    if (request.name.isBlank() || request.age == null) {
+                    if (request.name.isBlank()) {
                         call.respond(
                             HttpStatusCode.BadRequest,
                             ApiResponse<CompleteProfileResponse>(
