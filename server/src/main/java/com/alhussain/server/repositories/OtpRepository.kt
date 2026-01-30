@@ -3,12 +3,20 @@ package com.alhussain.server.repositories
 // OtpRepository.kt
 
 import com.alhussain.shared.model.Otp
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.less
-import org.jetbrains.exposed.sql.javatime.CurrentDateTime
-import org.jetbrains.exposed.sql.javatime.datetime
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.v1.core.*
+import org.jetbrains.exposed.v1.core.ResultRow
+import org.jetbrains.exposed.v1.core.SortOrder
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.less
+import org.jetbrains.exposed.v1.javatime.CurrentDateTime
+import org.jetbrains.exposed.v1.javatime.datetime
+import org.jetbrains.exposed.v1.jdbc.deleteWhere
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+import org.jetbrains.exposed.v1.jdbc.update
 import java.time.LocalDateTime
 import java.util.*
 
@@ -56,7 +64,11 @@ class OtpRepository {
      */
     private fun findById(id: String): Otp? =
         transaction {
-            Otps.select(column = Expression.build { Otps.id eq id }).singleOrNull()?.toOtp()
+            Otps
+                .selectAll()
+                .where { Otps.id eq id }
+                .singleOrNull()
+                ?.toOtp()
         }
 
     /**
@@ -65,7 +77,8 @@ class OtpRepository {
     suspend fun findByPhoneNumber(phoneNumber: String): Otp? =
         transaction {
             Otps
-                .select(column = Expression.build { Otps.phoneNumber eq phoneNumber })
+                .selectAll()
+                .where { Otps.phoneNumber eq phoneNumber }
                 .orderBy(Otps.createdAt to SortOrder.DESC)
                 .limit(1)
                 .singleOrNull()
