@@ -67,6 +67,7 @@ kotlin {
             implementation(libs.material.icons.core)
 
             implementation(libs.navigation.compose)
+            implementation(libs.firebase.auth)
 
             implementation(compose.ui)
             implementation(compose.components.resources)

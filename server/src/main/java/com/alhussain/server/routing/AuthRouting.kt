@@ -1,5 +1,7 @@
 package com.alhussain.server.routing
 
+import com.alhussain.server.repositories.Users
+import com.alhussain.server.repositories.Users.phoneNumber
 import com.alhussain.server.service.AuthService
 import com.alhussain.shared.ApiResponse
 import com.alhussain.shared.dto.request.CompleteProfileRequest
@@ -9,15 +11,23 @@ import com.alhussain.shared.dto.response.CompleteProfileResponse
 import com.alhussain.shared.dto.response.LogoutResponse
 import com.alhussain.shared.dto.response.SendOtpResponse
 import com.alhussain.shared.dto.response.VerifyOtpResponse
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseToken
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.authenticate
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal
+import io.ktor.server.request.header
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 
 fun Route.authRoutes(authService: AuthService) {
     route("/api/auth") {
@@ -25,6 +35,39 @@ fun Route.authRoutes(authService: AuthService) {
          * Send OTP to phone number
          * POST /api/auth/send-otp
          */
+        // In your Ktor Route
+        post("/auth/login") {
+            val idToken =
+                call.request.header("Authorization")?.removePrefix("Bearer ")
+                    ?: return@post call.respond(HttpStatusCode.Unauthorized)
+
+            try {
+                // 1. Verify token authenticity with Firebase Admin SDK
+                val decodedToken: FirebaseToken = FirebaseAuth.getInstance().verifyIdToken(idToken)
+                val uid = decodedToken.uid
+                val phone = decodedToken.claims["phone_number"] as? String
+
+                // 2. Business Logic: Sync with Postgres using Exposed
+                transaction {
+                    val existingUser =
+                        Users.selectAll().where { Users.firebaseId eq uid }.singleOrNull()
+
+                    if (existingUser == null) {
+                        // First time login - create the user
+                        Users.insert {
+                            it[firebaseId] = uid
+                            it[phoneNumber] = phone ?: ""
+                        }
+                    }
+                }
+
+                call.respond(HttpStatusCode.OK, mapOf("message" to "Successfully authenticated"))
+            } catch (e: Exception) {
+                // Token was fake, expired, or tampered with
+                call.respond(HttpStatusCode.Unauthorized, "Invalid Token")
+            }
+        }
+
         post("/send-otp") {
             try {
                 val request = call.receive<SendOtpRequest>()

@@ -30,6 +30,8 @@ dependencies {
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.java.time)
 
+    implementation(libs.firebase.admin)
+
     // Database Drivers
     implementation(libs.postgresql)
 

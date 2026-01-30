@@ -22,6 +22,8 @@ import java.util.UUID
 
 object Users : Table("users") {
     val id = varchar("id", 36)
+
+    val firebaseId = varchar("id", 36)
     val phoneNumber = varchar("phone_number", 20).uniqueIndex()
     val name = varchar("name", 100).nullable()
     val age = integer("age").nullable()

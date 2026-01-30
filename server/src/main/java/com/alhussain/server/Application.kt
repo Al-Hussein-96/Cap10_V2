@@ -8,6 +8,7 @@ import com.alhussain.server.routing.authRoutes
 import com.alhussain.server.service.AuthService
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.google.firebase.auth.FirebaseAuth
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -33,10 +34,10 @@ fun main() {
 fun Application.module() {
     // Database configuration
     Database.connect(
-        url = "jdbc:postgresql://localhost:5432/football_db"/*environment.config.property("database.url").getString()*/,
-        driver = "org.postgresql.Driver"/*environment.config.property("database.driver").getString()*/,
-        user = "alhussain" /*environment.config.property("database.user").getString()*/,
-        password = "Pass@123"/*environment.config.property("database.password").getString()*/,
+        url = "jdbc:postgresql://localhost:5432/football_db", // environment.config.property("database.url").getString()
+        driver = "org.postgresql.Driver", // environment.config.property("database.driver").getString()
+        user = "alhussain", // environment.config.property("database.user").getString()
+        password = "Pass@123", // environment.config.property("database.password").getString()
     )
 
     // Create tables if they don't exist

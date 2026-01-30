@@ -14,6 +14,7 @@ composeMultiplatform = "1.11.0-alpha01"
 detekt = "0.5.3"
 detektFormatting = "1.23.8"
 exposedCore = "1.0.0"
+firebaseAdmin = "9.7.1"
 javaJwt = "4.5.0"
 junit = "4.13.2"
 kotlin = "2.3.0"
@@ -27,7 +28,7 @@ ktor = "3.3.3"
 logback = "1.5.18"
 kotlinxSerializationJson = "1.8.1"
 postgresql = "42.7.8"
-
+firebase-kotlin = "2.1.0" # Use the latest version
 [libraries]
 detekt = { module = "io.nlopez.compose.rules:detekt", version.ref = "detekt" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detektFormatting" }
@@ -35,6 +36,7 @@ exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "e
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposedCore" }
 exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposedCore" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposedCore" }
+firebase-admin = { module = "com.google.firebase:firebase-admin", version.ref = "firebaseAdmin" }
 java-jwt = { module = "com.auth0:java-jwt", version.ref = "javaJwt" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -79,6 +81,8 @@ ktor-serverNetty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "kt
 ktor-serverTestHost = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 
+
+firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebase-kotlin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
