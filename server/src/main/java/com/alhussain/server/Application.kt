@@ -8,7 +8,6 @@ import com.alhussain.server.routing.authRoutes
 import com.alhussain.server.service.AuthService
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.google.firebase.auth.FirebaseAuth
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install

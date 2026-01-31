@@ -39,7 +39,7 @@ kotlin {
             sourceSetTreeName = "test"
         }
         compilerOptions.jvmTarget.set(
-            JvmTarget.JVM_21,
+            JvmTarget.JVM_17,
         )
     }
     listOf(
@@ -58,6 +58,11 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:32.7.0"))
+
+            implementation("com.google.firebase:firebase-auth-ktx")
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)

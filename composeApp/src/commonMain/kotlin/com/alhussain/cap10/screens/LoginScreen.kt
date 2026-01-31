@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,12 +39,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.FirebaseAuth
+import dev.gitlive.firebase.auth.PhoneAuthProvider
+import dev.gitlive.firebase.auth.PhoneVerificationProvider
+import dev.gitlive.firebase.auth.auth
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen() {
     var phoneNumber by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+
+
+    val coroutineScope = rememberCoroutineScope()
 
     Box(
         modifier =
@@ -169,7 +179,15 @@ fun LoginScreen() {
             Button(
                 onClick = {
                     isLoading = true
-                    // Handle login
+
+                    coroutineScope.launch {
+
+
+
+
+
+                    }
+
                 },
                 modifier =
                     Modifier

@@ -11,8 +11,6 @@ import com.alhussain.shared.dto.response.CompleteProfileResponse
 import com.alhussain.shared.dto.response.LogoutResponse
 import com.alhussain.shared.dto.response.SendOtpResponse
 import com.alhussain.shared.dto.response.VerifyOtpResponse
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseToken
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.authenticate
 import io.ktor.server.auth.jwt.JWTPrincipal
@@ -36,37 +34,37 @@ fun Route.authRoutes(authService: AuthService) {
          * POST /api/auth/send-otp
          */
         // In your Ktor Route
-        post("/auth/login") {
-            val idToken =
-                call.request.header("Authorization")?.removePrefix("Bearer ")
-                    ?: return@post call.respond(HttpStatusCode.Unauthorized)
-
-            try {
-                // 1. Verify token authenticity with Firebase Admin SDK
-                val decodedToken: FirebaseToken = FirebaseAuth.getInstance().verifyIdToken(idToken)
-                val uid = decodedToken.uid
-                val phone = decodedToken.claims["phone_number"] as? String
-
-                // 2. Business Logic: Sync with Postgres using Exposed
-                transaction {
-                    val existingUser =
-                        Users.selectAll().where { Users.firebaseId eq uid }.singleOrNull()
-
-                    if (existingUser == null) {
-                        // First time login - create the user
-                        Users.insert {
-                            it[firebaseId] = uid
-                            it[phoneNumber] = phone ?: ""
-                        }
-                    }
-                }
-
-                call.respond(HttpStatusCode.OK, mapOf("message" to "Successfully authenticated"))
-            } catch (e: Exception) {
-                // Token was fake, expired, or tampered with
-                call.respond(HttpStatusCode.Unauthorized, "Invalid Token")
-            }
-        }
+//        post("/auth/login") {
+//            val idToken =
+//                call.request.header("Authorization")?.removePrefix("Bearer ")
+//                    ?: return@post call.respond(HttpStatusCode.Unauthorized)
+//
+//            try {
+//                // 1. Verify token authenticity with Firebase Admin SDK
+//                val decodedToken: FirebaseToken = FirebaseAuth.getInstance().verifyIdToken(idToken)
+//                val uid = decodedToken.uid
+//                val phone = decodedToken.claims["phone_number"] as? String
+//
+//                // 2. Business Logic: Sync with Postgres using Exposed
+//                transaction {
+//                    val existingUser =
+//                        Users.selectAll().where { Users.firebaseId eq uid }.singleOrNull()
+//
+//                    if (existingUser == null) {
+//                        // First time login - create the user
+//                        Users.insert {
+//                            it[firebaseId] = uid
+//                            it[phoneNumber] = phone ?: ""
+//                        }
+//                    }
+//                }
+//
+//                call.respond(HttpStatusCode.OK, mapOf("message" to "Successfully authenticated"))
+//            } catch (e: Exception) {
+//                // Token was fake, expired, or tampered with
+//                call.respond(HttpStatusCode.Unauthorized, "Invalid Token")
+//            }
+//        }
 
         post("/send-otp") {
             try {
